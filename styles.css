@@ -16,20 +16,31 @@ html {
 }
 
 /************ Font styles ************/
-a {
+a,
+h1,
+h2 {
     font-family: "Orbitron", sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
 }
 
-#canvas-placeholder {
+#canvas-placeholder,
+.planet-info-value {
     font-family: "space-mono", monospace;
     font-weight: 400;
 }
 
 /************ Website structure styles ************/
+#site-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/*** Main page ***/
 #site-header {
-    position: fixed;
+    height: 5%;
     top: 0;
     left: 0;
     width: 100%;
@@ -38,6 +49,7 @@ a {
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(0, 255, 255, 0.4);
     box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2);
+    align-content: center;
 }
 
 #navbar ul {
@@ -60,6 +72,45 @@ a {
     align-items: center;
 }
 
+/*** Planet page ***/
+.planet-page-wrapper {
+    height: 95%; /* 100% minus the header height */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2% 5% 2% 5%;
+    margin: 0;
+}
+
+.visual-column {
+    height: 100%;
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.info-column {
+    height: 100%;
+    flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em;
+}
+
+.planet-info-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.planet-page-planet-image {
+    width: 100%;
+    height: auto;
+}
 /************ Text styles ************/
 li a {
     color: #00d4ff;
