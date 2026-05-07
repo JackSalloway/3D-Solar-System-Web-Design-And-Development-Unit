@@ -1,4 +1,10 @@
 /* Initially plan to have all styles in here, as I dont intend for the website to get to convoluted, but will adapt if necessary */
+/* Reset styles across all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body,
 html {
