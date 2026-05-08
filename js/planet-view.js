@@ -9,9 +9,6 @@ const initPlanetPage = () => {
     // Find the correct planet data using the key
     const data = planetData[planetKey];
 
-    // Log data to console for debugging
-    console.log("Planet data for key:", planetKey, data);
-
     if (!data) {
         console.error("Planet data not found for key:", planetKey);
         return;
