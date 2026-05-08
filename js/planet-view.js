@@ -1,11 +1,11 @@
 import { planetData } from "./data.js";
 
+// Get the planet name from the URL query parameters
+const params = new URLSearchParams(window.location.search);
+const planetKey = params.get("planet");
+
 // Function to populate the planet information page after the user clicks on a planet
 const initPlanetPage = () => {
-    // Get the planet name from the URL query parameters
-    const params = new URLSearchParams(window.location.search);
-    const planetKey = params.get("planet");
-
     // Find the correct planet data using the key
     const data = planetData[planetKey];
 
@@ -36,5 +36,23 @@ const initPlanetPage = () => {
     document.title = data.name + " - Solar System Explorer";
 };
 
+const updateNavbar = (currentPlanet) => {
+    const navbarLinks = document.querySelectorAll(".navbar-link");
+
+    navbarLinks.forEach((link) => {
+        // Get data for each planet from their URL objects
+        const url = new URL(link.href, window.location.origin);
+        const planetParam = url.searchParams.get("planet");
+
+        // Apply or remove the nav-inactive class to the navbar links based on the current planet the user is viewing
+        if (planetParam === currentPlanet) {
+            link.classList.add("nav-inactive");
+        } else {
+            link.classList.remove("nav-inactive");
+        }
+    });
+};
+
 // Call the function
 initPlanetPage();
+updateNavbar(planetKey);
