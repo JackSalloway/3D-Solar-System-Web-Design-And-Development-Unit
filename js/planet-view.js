@@ -53,6 +53,6 @@ const updateNavbar = (currentPlanet) => {
     });
 };
 
-// Call the function
+// Call the functions to initialize the page and update the navbar
 initPlanetPage();
 updateNavbar(planetKey);
