@@ -36,6 +36,7 @@ const initPlanetPage = () => {
     document.title = data.name + " - Solar System Explorer";
 };
 
+// Function to update the navbar links based on the current planet being viewed
 const updateNavbar = (currentPlanet) => {
     const navbarLinks = document.querySelectorAll(".navbar-link");
 
