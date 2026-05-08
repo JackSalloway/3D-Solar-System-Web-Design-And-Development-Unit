@@ -20,32 +20,52 @@ const initSolarSystemView = () => {
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    // Create a generic shape to test Three.js is working
-    const geometry = new THREE.BoxGeometry(5, 5, 5);
-    const material = new THREE.MeshBasicMaterial({
-        color: 0xff0000,
-        wireframe: true,
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Camera beginning position and orientation is set to be above the sun, looking down at it
+    camera.position.set(0, 75, 0);
+    camera.lookAt(0, 0, 0);
 
-    // Move the camera and cube so the cube is visible in the scene
-    camera.position.set(0, 0, 10);
-    cube.position.set(0, 0, 0);
-    camera.lookAt(cube.position);
+    // Render celestial bodies and store them in variables
+    const sun = createSun(scene);
 
     // Animation loop to render the scene
     const animate = () => {
         requestAnimationFrame(animate);
 
-        // Slowly rotate the cube for a simple animation effect
-        cube.rotation.x += 0.01;
+        // Rotations
+        sun.rotation.y += 0.001;
         cube.rotation.y += 0.01;
 
         renderer.render(scene, camera);
     };
 
     animate();
+};
+
+// Function to create and add the sun to the scene
+const createSun = (scene) => {
+    const textureLoader = new THREE.TextureLoader();
+    const sunTexture = textureLoader.load("../images/sun_texture.jpg");
+
+    // Create the sun material with emissive properties to make it glow
+    const sunMaterial = new THREE.MeshStandardMaterial({
+        map: sunTexture,
+        emissive: 0xffcc33,
+        emissiveMap: sunTexture,
+        emissiveIntensity: 1.5,
+    });
+
+    // Create the sun geometry and mesh
+    const sunGeometry = new THREE.SphereGeometry(5, 64, 64);
+    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+    sun.position.set(0, 0, 0);
+    scene.add(sun);
+
+    // Add a point light at the sun's position to illuminate the scene
+    const sunLight = new THREE.PointLight(0xffffff, 2000, 500, 1.7);
+    sunLight.position.set(0, 0, 0);
+    scene.add(sunLight);
+
+    return sun;
 };
 
 // Call the function to initialize the solar system view
