@@ -16,6 +16,14 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="styles.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="site-wrapper">
@@ -67,11 +75,9 @@
                 </nav>
             </header>
 
-            <main id="site-main">
-                <div id="canvas-placeholder">
-                    Currently just a placeholder until Three.js is integrated.
-                </div>
-            </main>
+            <main id="site-main"></main>
         </div>
+
+        <script type="module" src="js/system-view.js"></script>
     </body>
 </html>
