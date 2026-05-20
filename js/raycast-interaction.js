@@ -7,7 +7,7 @@ export const initRaycastInteraction = (camera, renderer, clickableMeshes) => {
     const mouse = new THREE.Vector2(); // Create a 2D vector to store the normalized mouse coordinates
 
     // Add an event listener for mouse clicks on the renderer's DOM element
-    window.addEventListener("click", (event) => {
+    window.addEventListener("dblclick", (event) => {
         // Get the canvas boundaries
         const rect = renderer.domElement.getBoundingClientRect();
 
