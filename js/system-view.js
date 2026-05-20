@@ -28,6 +28,9 @@ const initSolarSystemView = () => {
     const sun = createSun(scene);
     const mercury = createMercury(scene);
 
+    // Render orbit lines to show the paths of the planets and store them in variables
+    createOrbitLine(scene, 20); // Mercury's orbit
+
     // Animation loop to render the scene
     const animate = () => {
         requestAnimationFrame(animate);
@@ -67,6 +70,31 @@ const createSun = (scene) => {
     scene.add(sunLight);
 
     return sun;
+};
+
+const createOrbitLine = (scene, radius) => {
+    // Define and store the curve in a variable
+    const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, 2 * Math.PI);
+
+    // Get points from the curve to create geometry
+    const points = curve.getPoints(128); // Divided into 128 points for a smoother curve
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    // Apply a basic material to the geometry
+    const material = new THREE.LineBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.2,
+    });
+
+    // Create the line
+    const orbitLine = new THREE.Line(geometry, material);
+
+    // Rotate the line to lie in the XZ plane
+    orbitLine.rotation.x = Math.PI / 2;
+
+    scene.add(orbitLine);
+    return orbitLine;
 };
 
 // Function to create and add mercury to the scene - Will create a function that handles all planets, just testing this for now
