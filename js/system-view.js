@@ -26,10 +26,12 @@ const initSolarSystemView = () => {
 
     // Render celestial bodies and store them in variables
     const sun = createSun(scene);
-    const mercury = createMercury(scene);
+    const mercury = createPlanet(scene, "../images/mercury_texture.jpg", 1, 20);
+    const venus = createPlanet(scene, "../images/venus_texture.jpg", 1.5, 30);
 
     // Render orbit lines to show the paths of the planets and store them in variables
     const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
+    const venusOrbit = createOrbitLine(scene, 30); // Venus's orbit
 
     // Animation loop to render the scene
     const animate = () => {
@@ -97,22 +99,24 @@ const createOrbitLine = (scene, radius) => {
     return orbitLine;
 };
 
-// Function to create and add mercury to the scene - Will create a function that handles all planets, just testing this for now
-const createMercury = (scene) => {
+// Function to create and add a planet to the scene
+const createPlanet = (scene, texturePath, radius, distanceFromSun) => {
+    // Create the planet texture
     const textureLoader = new THREE.TextureLoader();
-    const mercuryTexture = textureLoader.load("../images/mercury_texture.jpg");
+    const planetTexture = textureLoader.load(texturePath);
 
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    // Create the planet geometry and material
+    const geometry = new THREE.SphereGeometry(radius, 32, 32);
     const material = new THREE.MeshStandardMaterial({
-        map: mercuryTexture,
+        map: planetTexture,
         roughness: 0.7,
     });
-    const mercury = new THREE.Mesh(geometry, material);
+    const planet = new THREE.Mesh(geometry, material);
 
-    mercury.position.set(0, 0, 20);
+    planet.position.set(0, 0, distanceFromSun);
 
-    scene.add(mercury);
-    return mercury;
+    scene.add(planet);
+    return planet;
 };
 
 // Call the function to initialize the solar system view
