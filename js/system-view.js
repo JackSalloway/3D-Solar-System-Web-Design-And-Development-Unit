@@ -6,6 +6,7 @@ const planets = []; // Array of objects to store all planets and their correspon
 const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
 const baseOrbitalSpeed = 0.002; // Base speed for Earth's orbit, used to calculate the speeds of the other planets based on their orbital periods
 const baseDistanceFromSun = 100; // Base distance from the sun for Earth, used to calculate the distances of the other planets based on their actual distances from the sun, 100 units = 149.6 million km
+const basePlanetRadius = 2; // Base radius for Earth, used to calculate the radii of the other planets based on their actual diameters, 1 unit = 6371 km (Earth's diameter / 2)
 const clickableMeshes = []; // Array to store all meshes that should be clickable, allowing for enhanced camera controls relating to the clicked mesh.
 
 // Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
@@ -64,7 +65,7 @@ const initSolarSystemView = () => {
         scene,
         "Mercury",
         "../images/mercury_texture.jpg",
-        1,
+        (2439.7 / 6371) * basePlanetRadius, // Diameter of ~4879 km (~0.77 units)
         (57.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~57.9 million km (~38.7 units)
         (24 / 648) * baseRotationSpeed, // Rotation perioud of ~58 days
         (365.25 / 88) * baseOrbitalSpeed, // Orbital period of ~88 days
@@ -75,7 +76,7 @@ const initSolarSystemView = () => {
         scene,
         "Venus",
         "../images/venus_texture.jpg",
-        1.5,
+        (6051.8 / 6371) * basePlanetRadius, // Diameter of ~12104 km (~1.9 units)
         (108.2 / 149.6) * baseDistanceFromSun, // Distance from the sun ~108.2 million km (~72.3 units)
         (24 / 5832) * baseRotationSpeed * -1, // Retrograde rotation period of ~243 days
         (365.25 / 225) * baseOrbitalSpeed, // Orbital period of ~225 days
@@ -86,7 +87,7 @@ const initSolarSystemView = () => {
         scene,
         "Earth",
         "../images/earth_texture.jpg",
-        2,
+        basePlanetRadius, // Diameter of ~12756 km (~2 units)
         (149.6 / 149.6) * baseDistanceFromSun, // Distance from the sun ~149.6 million km (100 units)
         (24 / 24) * baseRotationSpeed, // Rotation period of ~24 hours
         (365.25 / 365.25) * baseOrbitalSpeed, // Orbital period of ~365.25 days
@@ -97,7 +98,7 @@ const initSolarSystemView = () => {
         scene,
         "Mars",
         "../images/mars_texture.jpg",
-        1.2,
+        (3389.5 / 6371) * basePlanetRadius, // Diameter of ~3389.5 km (~1.06 units)
         (227.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~227.9 million km (~152.3 units)
         (24 / 24.6) * baseRotationSpeed, // Rotation period of ~24.6 hours
         (365.25 / 687) * baseOrbitalSpeed, // Orbital period of ~687 days
@@ -108,7 +109,7 @@ const initSolarSystemView = () => {
         scene,
         "Jupiter",
         "../images/jupiter_texture.jpg",
-        4,
+        (69911 / 6371) * basePlanetRadius, // Diameter of ~69911 km (~21.95 units)
         (778.5 / 149.6) * baseDistanceFromSun, // Distance from the sun ~778.5 million km (~520.3 units)
         (24 / 9.9) * baseRotationSpeed, // Rotation period of ~9.9 hours
         (365.25 / 4333) * baseOrbitalSpeed, // Orbital period of ~4333 days (11.86 years)
@@ -119,7 +120,7 @@ const initSolarSystemView = () => {
         scene,
         "Saturn",
         "../images/saturn_texture.jpg",
-        3.5,
+        (58232 / 6371) * basePlanetRadius, // Diameter of ~58232 km (~18.28 units)
         (1432 / 149.6) * baseDistanceFromSun, // Distance from the sun ~1432 million km (~957.3 units)
         (24 / 10.7) * baseRotationSpeed, // Rotation period of ~10.7 hours
         (365.25 / 10759) * baseOrbitalSpeed, // Orbital period of ~10759 days (29.46 years)
@@ -130,7 +131,7 @@ const initSolarSystemView = () => {
         scene,
         "Uranus",
         "../images/uranus_texture.jpg",
-        3,
+        (25362 / 6371) * basePlanetRadius, // Diameter of ~25362 km (~7.96 units)
         (2871 / 149.6) * baseDistanceFromSun, // Distance from the sun ~2871 million km (~1919.6 units)
         (24 / 17) * baseRotationSpeed * -1, // Retrograde rotation period of ~17 hours
         (365.25 / 30688) * baseOrbitalSpeed, // Orbital period of ~30688 days (84.01 years)
@@ -141,7 +142,7 @@ const initSolarSystemView = () => {
         scene,
         "Neptune",
         "../images/neptune_texture.jpg",
-        2.5,
+        (24622 / 6371) * basePlanetRadius, // Diameter of ~24622 km (~7.73 units)
         (4495 / 149.6) * baseDistanceFromSun, // Distance from the sun ~4495 million km (~3005.3 units)
         (24 / 16) * baseRotationSpeed, // Rotation period of ~16 hours
         (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
@@ -202,7 +203,7 @@ const createSun = (scene) => {
     });
 
     // Create the sun geometry and mesh
-    const sunGeometry = new THREE.SphereGeometry(5, 64, 64);
+    const sunGeometry = new THREE.SphereGeometry(20, 64, 64);
     const sun = new THREE.Mesh(sunGeometry, sunMaterial);
     sun.position.set(0, 0, 0);
     scene.add(sun);
