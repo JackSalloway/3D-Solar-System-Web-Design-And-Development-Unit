@@ -28,10 +28,27 @@ const initSolarSystemView = () => {
     const sun = createSun(scene);
     const mercury = createPlanet(scene, "../images/mercury_texture.jpg", 1, 20);
     const venus = createPlanet(scene, "../images/venus_texture.jpg", 1.5, 30);
+    const earth = createPlanet(scene, "../images/earth_texture.jpg", 2, 40);
+    const mars = createPlanet(scene, "../images/mars_texture.jpg", 1.2, 50);
+    const jupiter = createPlanet(scene, "../images/jupiter_texture.jpg", 4, 70);
+    const saturn = createPlanet(scene, "../images/saturn_texture.jpg", 3.5, 90);
+    const uranus = createPlanet(scene, "../images/uranus_texture.jpg", 3, 110);
+    const neptune = createPlanet(
+        scene,
+        "../images/neptune_texture.jpg",
+        2.5,
+        130,
+    );
 
     // Render orbit lines to show the paths of the planets and store them in variables
     const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
     const venusOrbit = createOrbitLine(scene, 30); // Venus's orbit
+    const earthOrbit = createOrbitLine(scene, 40); // Earth's orbit
+    const marsOrbit = createOrbitLine(scene, 50); // Mars's orbit
+    const jupiterOrbit = createOrbitLine(scene, 70); // Jupiter's orbit
+    const saturnOrbit = createOrbitLine(scene, 90); // Saturn's orbit
+    const uranusOrbit = createOrbitLine(scene, 110); // Uranus's orbit
+    const neptuneOrbit = createOrbitLine(scene, 130); // Neptune's orbit
 
     // Animation loop to render the scene
     const animate = () => {
