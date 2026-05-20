@@ -26,6 +26,7 @@ const initSolarSystemView = () => {
 
     // Render celestial bodies and store them in variables
     const sun = createSun(scene);
+    const mercury = createMercury(scene);
 
     // Animation loop to render the scene
     const animate = () => {
@@ -33,7 +34,7 @@ const initSolarSystemView = () => {
 
         // Rotations
         sun.rotation.y += 0.001;
-        cube.rotation.y += 0.01;
+        mercury.rotation.y += 0.02;
 
         renderer.render(scene, camera);
     };
@@ -66,6 +67,24 @@ const createSun = (scene) => {
     scene.add(sunLight);
 
     return sun;
+};
+
+// Function to create and add mercury to the scene - Will create a function that handles all planets, just testing this for now
+const createMercury = (scene) => {
+    const textureLoader = new THREE.TextureLoader();
+    const mercuryTexture = textureLoader.load("../images/mercury_texture.jpg");
+
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const material = new THREE.MeshStandardMaterial({
+        map: mercuryTexture,
+        roughness: 0.7,
+    });
+    const mercury = new THREE.Mesh(geometry, material);
+
+    mercury.position.set(0, 0, 20);
+
+    scene.add(mercury);
+    return mercury;
 };
 
 // Call the function to initialize the solar system view
