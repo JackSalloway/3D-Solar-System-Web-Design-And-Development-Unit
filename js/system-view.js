@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { initCameraControls } from "./camera-controls.js";
 
 const planets = []; // Array of objects to store all planets and their corresponding orbit anchors for easy access in the animation loop
 const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
@@ -23,6 +24,9 @@ const initSolarSystemView = () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
+
+    // Initialize camera controls to allow the user to explore the solar system
+    const controls = initCameraControls(camera, renderer);
 
     // Camera beginning position and orientation is set to be above the sun, looking down at it
     camera.position.set(0, 75, 0);
@@ -126,6 +130,9 @@ const initSolarSystemView = () => {
     // Animation loop to render the scene
     const animate = () => {
         requestAnimationFrame(animate);
+
+        controls.update(); // Update camera controls for smoother movement as damping is enabled
+
         // Rotate the sun on its axis
         sun.rotation.y += 0.00018; // ~27 day rotation period
 
