@@ -175,6 +175,34 @@ const initSolarSystemView = () => {
     const animate = () => {
         requestAnimationFrame(animate);
 
+        // Check if a mesh is selected, if so make the camera follow it as moves
+        if (selectedMesh) {
+            // Prevent the user from panning with the right mouse button (sends the camera flying into space otherwise)
+            controls.enablePan = false;
+
+            // Get the selected mesh position for the current frame and store it in a variable
+            const selectedMeshCurrentPosition = new THREE.Vector3();
+            selectedMesh.getWorldPosition(selectedMeshCurrentPosition);
+
+            // Calculate the distance the mesh moved since the last frame
+            const delta = new THREE.Vector3().subVectors(
+                selectedMeshCurrentPosition,
+                selectedMeshPreviousPosition,
+            );
+
+            // Move the camera by the distance the selected mesh moved
+            camera.position.add(delta);
+
+            // Update the orbit controls to look at the new position of the mesh
+            controls.target.copy(selectedMeshCurrentPosition);
+
+            // Update the value of the selectedMeshPreviousPosition variable ready for next frame
+            selectedMeshPreviousPosition.copy(selectedMeshCurrentPosition);
+        } else {
+            // Enable panning again as there is no current selected mesh
+            controls.enablePan = true;
+        }
+
         controls.update(); // Update camera controls for smoother movement as damping is enabled
 
         // Rotate the sun on its axis
