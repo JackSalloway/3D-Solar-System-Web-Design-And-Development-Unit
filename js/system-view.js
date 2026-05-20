@@ -1,9 +1,11 @@
 import * as THREE from "three";
 import { initCameraControls } from "./camera-controls.js";
+import { initRaycastInteraction } from "./raycast-interaction.js";
 
 const planets = []; // Array of objects to store all planets and their corresponding orbit anchors for easy access in the animation loop
 const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
 const baseOrbitalSpeed = 0.002; // Base speed for Earth's orbit, used to calculate the speeds of the other planets based on their orbital periods
+const clickableMeshes = []; // Array to store all meshes that should be clickable, allowing for enhanced camera controls relating to the clicked mesh.
 
 // Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
 const initSolarSystemView = () => {
@@ -32,13 +34,17 @@ const initSolarSystemView = () => {
     camera.position.set(0, 75, 0);
     camera.lookAt(0, 0, 0);
 
-    // Render celestial bodies and store them in variables
+    // Render the sun and add it to the clickableMeshes array
     const sun = createSun(scene);
+    sun.name = "Sun"; // Set the name of the sun mesh to "Sun" for easier identification in raycast interaction
+    clickableMeshes.push(sun);
 
+    // Add the planets to the scene and store them in the planets array, which contains an object for each planets data values
     // Rotation speeds are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
     // Orbit speeds are based on the actual orbital periods of the planets, with earth's orbit speed set to 0.002 as a 365 day orbital period
     const mercury = createPlanet(
         scene,
+        "Mercury",
         "../images/mercury_texture.jpg",
         1,
         20,
@@ -49,6 +55,7 @@ const initSolarSystemView = () => {
 
     const venus = createPlanet(
         scene,
+        "Venus",
         "../images/venus_texture.jpg",
         1.5,
         30,
@@ -59,6 +66,7 @@ const initSolarSystemView = () => {
 
     const earth = createPlanet(
         scene,
+        "Earth",
         "../images/earth_texture.jpg",
         2,
         40,
@@ -69,6 +77,7 @@ const initSolarSystemView = () => {
 
     const mars = createPlanet(
         scene,
+        "Mars",
         "../images/mars_texture.jpg",
         1.2,
         50,
@@ -79,6 +88,7 @@ const initSolarSystemView = () => {
 
     const jupiter = createPlanet(
         scene,
+        "Jupiter",
         "../images/jupiter_texture.jpg",
         4,
         70,
@@ -89,6 +99,7 @@ const initSolarSystemView = () => {
 
     const saturn = createPlanet(
         scene,
+        "Saturn",
         "../images/saturn_texture.jpg",
         3.5,
         90,
@@ -99,6 +110,7 @@ const initSolarSystemView = () => {
 
     const uranus = createPlanet(
         scene,
+        "Uranus",
         "../images/uranus_texture.jpg",
         3,
         110,
@@ -109,6 +121,7 @@ const initSolarSystemView = () => {
 
     const neptune = createPlanet(
         scene,
+        "Neptune",
         "../images/neptune_texture.jpg",
         2.5,
         130,
@@ -116,6 +129,15 @@ const initSolarSystemView = () => {
         (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
     );
     planets.push(neptune);
+
+    // Push each of the planet meshes into the clickableMeshes array
+    planets.forEach((planet) => {
+        planet.mesh.name = planet.name; // Set the name of the mesh to the planet name for easier identification in raycast interaction
+        clickableMeshes.push(planet.mesh);
+    });
+
+    // Initialize raycast interaction for mouse clicks on the sun and planets, allowing for enhanced camera controls relating to the clicked mesh.
+    initRaycastInteraction(camera, renderer, clickableMeshes);
 
     // Render orbit lines to show the paths of the planets and store them in variables
     const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
@@ -203,6 +225,7 @@ const createOrbitLine = (scene, radius) => {
 // Function to create and add a planet to the scene
 const createPlanet = (
     scene,
+    name,
     texturePath,
     radius,
     distanceFromSun,
@@ -236,6 +259,7 @@ const createPlanet = (
         mesh: planet,
         rotationSpeed: rotationSpeed,
         orbitSpeed: orbitSpeed,
+        name: name,
     };
 };
 
