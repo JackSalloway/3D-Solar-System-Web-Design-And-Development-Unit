@@ -5,6 +5,7 @@ import { initRaycastInteraction } from "./raycast-interaction.js";
 const planets = []; // Array of objects to store all planets and their corresponding orbit anchors for easy access in the animation loop
 const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
 const baseOrbitalSpeed = 0.002; // Base speed for Earth's orbit, used to calculate the speeds of the other planets based on their orbital periods
+const baseDistanceFromSun = 100; // Base distance from the sun for Earth, used to calculate the distances of the other planets based on their actual distances from the sun, 100 units = 149.6 million km
 const clickableMeshes = []; // Array to store all meshes that should be clickable, allowing for enhanced camera controls relating to the clicked mesh.
 
 // Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
@@ -19,7 +20,7 @@ const initSolarSystemView = () => {
         75,
         container.clientWidth / container.clientHeight,
         0.1,
-        1000,
+        10000,
     );
 
     // Create the renderer
@@ -40,6 +41,7 @@ const initSolarSystemView = () => {
     clickableMeshes.push(sun);
 
     // Add the planets to the scene and store them in the planets array, which contains an object for each planets data values
+    // Distance from the sun is calculated based on the actual distance of each planet from the sun, with earth's distance set to 100 units
     // Rotation speeds are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
     // Orbit speeds are based on the actual orbital periods of the planets, with earth's orbit speed set to 0.002 as a 365 day orbital period
     const mercury = createPlanet(
@@ -47,7 +49,7 @@ const initSolarSystemView = () => {
         "Mercury",
         "../images/mercury_texture.jpg",
         1,
-        20,
+        (57.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~57.9 million km
         (24 / 648) * baseRotationSpeed, // Rotation perioud of ~58 days
         (365.25 / 88) * baseOrbitalSpeed, // Orbital period of ~88 days
     );
@@ -58,7 +60,7 @@ const initSolarSystemView = () => {
         "Venus",
         "../images/venus_texture.jpg",
         1.5,
-        30,
+        (108.2 / 149.6) * baseDistanceFromSun, // Distance from the sun ~108.2 million km
         (24 / 5832) * baseRotationSpeed * -1, // Retrograde rotation period of ~243 days
         (365.25 / 225) * baseOrbitalSpeed, // Orbital period of ~225 days
     );
@@ -69,7 +71,7 @@ const initSolarSystemView = () => {
         "Earth",
         "../images/earth_texture.jpg",
         2,
-        40,
+        (149.6 / 149.6) * baseDistanceFromSun, // Distance from the sun ~149.6 million km
         (24 / 24) * baseRotationSpeed, // Rotation period of ~24 hours
         (365.25 / 365.25) * baseOrbitalSpeed, // Orbital period of ~365.25 days
     );
@@ -80,7 +82,7 @@ const initSolarSystemView = () => {
         "Mars",
         "../images/mars_texture.jpg",
         1.2,
-        50,
+        (227.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~227.9 million km
         (24 / 24.6) * baseRotationSpeed, // Rotation period of ~24.6 hours
         (365.25 / 687) * baseOrbitalSpeed, // Orbital period of ~687 days
     );
@@ -91,7 +93,7 @@ const initSolarSystemView = () => {
         "Jupiter",
         "../images/jupiter_texture.jpg",
         4,
-        70,
+        (778.5 / 149.6) * baseDistanceFromSun, // Distance from the sun ~778.5 million km
         (24 / 9.9) * baseRotationSpeed, // Rotation period of ~9.9 hours
         (365.25 / 4333) * baseOrbitalSpeed, // Orbital period of ~4333 days (11.86 years)
     );
@@ -102,7 +104,7 @@ const initSolarSystemView = () => {
         "Saturn",
         "../images/saturn_texture.jpg",
         3.5,
-        90,
+        (1432 / 149.6) * baseDistanceFromSun, // Distance from the sun ~1432 million km
         (24 / 10.7) * baseRotationSpeed, // Rotation period of ~10.7 hours
         (365.25 / 10759) * baseOrbitalSpeed, // Orbital period of ~10759 days (29.46 years)
     );
@@ -113,7 +115,7 @@ const initSolarSystemView = () => {
         "Uranus",
         "../images/uranus_texture.jpg",
         3,
-        110,
+        (2871 / 149.6) * baseDistanceFromSun, // Distance from the sun ~2871 million km
         (24 / 17) * baseRotationSpeed * -1, // Retrograde rotation period of ~17 hours
         (365.25 / 30688) * baseOrbitalSpeed, // Orbital period of ~30688 days (84.01 years)
     );
@@ -124,7 +126,7 @@ const initSolarSystemView = () => {
         "Neptune",
         "../images/neptune_texture.jpg",
         2.5,
-        130,
+        (4495 / 149.6) * baseDistanceFromSun, // Distance from the sun ~4495 million km
         (24 / 16) * baseRotationSpeed, // Rotation period of ~16 hours
         (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
     );
@@ -140,14 +142,14 @@ const initSolarSystemView = () => {
     initRaycastInteraction(camera, renderer, clickableMeshes);
 
     // Render orbit lines to show the paths of the planets and store them in variables
-    const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
-    const venusOrbit = createOrbitLine(scene, 30); // Venus's orbit
-    const earthOrbit = createOrbitLine(scene, 40); // Earth's orbit
-    const marsOrbit = createOrbitLine(scene, 50); // Mars's orbit
-    const jupiterOrbit = createOrbitLine(scene, 70); // Jupiter's orbit
-    const saturnOrbit = createOrbitLine(scene, 90); // Saturn's orbit
-    const uranusOrbit = createOrbitLine(scene, 110); // Uranus's orbit
-    const neptuneOrbit = createOrbitLine(scene, 130); // Neptune's orbit
+    const mercuryOrbit = createOrbitLine(scene, mercury.distanceFromSun); // Mercury's orbit
+    const venusOrbit = createOrbitLine(scene, venus.distanceFromSun); // Venus's orbit
+    const earthOrbit = createOrbitLine(scene, earth.distanceFromSun); // Earth's orbit
+    const marsOrbit = createOrbitLine(scene, mars.distanceFromSun); // Mars's orbit
+    const jupiterOrbit = createOrbitLine(scene, jupiter.distanceFromSun); // Jupiter's orbit
+    const saturnOrbit = createOrbitLine(scene, saturn.distanceFromSun); // Saturn's orbit
+    const uranusOrbit = createOrbitLine(scene, uranus.distanceFromSun); // Uranus's orbit
+    const neptuneOrbit = createOrbitLine(scene, neptune.distanceFromSun); // Neptune's orbit
 
     // Animation loop to render the scene
     const animate = () => {
@@ -190,7 +192,7 @@ const createSun = (scene) => {
     scene.add(sun);
 
     // Add a point light at the sun's position to illuminate the scene
-    const sunLight = new THREE.PointLight(0xffffff, 2000, 500, 1.7);
+    const sunLight = new THREE.PointLight(0xffffff, 10000, 5000, 1.7);
     sunLight.position.set(0, 0, 0);
     scene.add(sunLight);
 
@@ -260,6 +262,7 @@ const createPlanet = (
         rotationSpeed: rotationSpeed,
         orbitSpeed: orbitSpeed,
         name: name,
+        distanceFromSun: distanceFromSun,
     };
 };
 

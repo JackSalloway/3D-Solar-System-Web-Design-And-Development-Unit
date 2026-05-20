@@ -11,7 +11,7 @@ export const initCameraControls = (camera, renderer) => {
 
     // Set limits for zooming to prevent the user from zooming too far in or out
     controls.minDistance = 15; // Minimum distance from the center of the solar system
-    controls.maxDistance = 300; // Maximum distance from the center of the solar system
+    controls.maxDistance = 5000; // Maximum distance from the center of the solar system
 
     // Add damping to the controls for smoother movement, which also requires calling controls.update() in the animation loop
     controls.enableDamping = true;
