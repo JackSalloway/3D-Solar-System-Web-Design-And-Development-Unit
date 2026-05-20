@@ -28,7 +28,7 @@ const camera = new THREE.PerspectiveCamera(
 // Create the camera controls
 const controls = initCameraControls(camera, renderer); // Initialize camera controls to allow the user to explore the solar system
 
-// Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
+// Function to initialize the solar system view
 const initSolarSystemView = () => {
     // Create the scene
     const scene = new THREE.Scene();
