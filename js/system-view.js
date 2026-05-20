@@ -35,6 +35,22 @@ const initSolarSystemView = () => {
     camera.position.set(0, 75, 0);
     camera.lookAt(0, 0, 0);
 
+    // Create a cube texture loader to load the space background
+    const cubeTextureLoader = new THREE.CubeTextureLoader();
+
+    // Load the 6 space images that make up the skybox
+    const skyboxTexture = cubeTextureLoader.load([
+        "../images/star_skybox_1.png", // Right
+        "../images/star_skybox_2.png", // Left
+        "../images/star_skybox_3.png", // Top
+        "../images/star_skybox_4.png", // Bottom
+        "../images/star_skybox_5.png", // Front
+        "../images/star_skybox_6.png", // Back
+    ]);
+
+    // Set the scene background to the loaded skybox texture
+    scene.background = skyboxTexture;
+
     // Render the sun and add it to the clickableMeshes array
     const sun = createSun(scene);
     sun.name = "Sun"; // Set the name of the sun mesh to "Sun" for easier identification in raycast interaction
