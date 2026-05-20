@@ -54,9 +54,17 @@ const initSolarSystemView = () => {
     const animate = () => {
         requestAnimationFrame(animate);
 
-        // Rotations
-        sun.rotation.y += 0.001;
-        mercury.rotation.y += 0.02;
+        // Rotations are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
+        // Negative values are for planets with a retrograde rotation (Venus and Uranus)
+        sun.rotation.y += 0.00018; // ~27 day rotation period
+        mercury.rotation.y += 0.000085; // ~58 day rotation period
+        venus.rotation.y += -0.00002; // ~243 day retrograde rotation period
+        earth.rotation.y += 0.005; // ~24 hour rotation period
+        mars.rotation.y += 0.0048; // ~24 hour rotation period (slightly longer than Earth's)
+        jupiter.rotation.y += 0.0121; // ~9 hour rotation period
+        saturn.rotation.y += 0.0112; // ~10 hour rotation period
+        uranus.rotation.y += -0.007; // ~17 hour retrograde rotation period
+        neptune.rotation.y += 0.0075; // ~16 hour rotation period
 
         renderer.render(scene, camera);
     };
