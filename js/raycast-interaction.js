@@ -2,7 +2,12 @@ import * as THREE from "three";
 
 // Function to initialize raycast interaction for mouse clicks on the sun and planets
 // Export the function so it can be imported and used in system-view.js
-export const initRaycastInteraction = (camera, renderer, clickableMeshes) => {
+export const initRaycastInteraction = (
+    camera,
+    renderer,
+    clickableMeshes,
+    handleMeshSelect,
+) => {
     const raycaster = new THREE.Raycaster(); // Create a new raycaster object to handle raycasting for mouse interactions
     const mouse = new THREE.Vector2(); // Create a 2D vector to store the normalized mouse coordinates
 
@@ -27,8 +32,14 @@ export const initRaycastInteraction = (camera, renderer, clickableMeshes) => {
                 `Mesh clicked: ${intersects[0].object.name}`,
                 intersects[0].object,
             );
+
+            // Get the first intersected mesh (the closest one to the camera)
+            const clickedMesh = intersects[0].object;
+
+            // Call the handleMeshSelect callback function with the clicked mesh as an argument
+            handleMeshSelect(clickedMesh);
         } else {
-            console.log("No mesh clicked");
+            handleMeshSelect(null); // Call the callback with null as the argument if no mesh was clicked to reset any selections
         }
     });
 };

@@ -8,29 +8,32 @@ const baseOrbitalSpeed = 0.002; // Base speed for Earth's orbit, used to calcula
 const baseDistanceFromSun = 100; // Base distance from the sun for Earth, used to calculate the distances of the other planets based on their actual distances from the sun, 100 units = 149.6 million km
 const basePlanetRadius = 2; // Base radius for Earth, used to calculate the radii of the other planets based on their actual diameters, 1 unit = 6371 km (Earth's diameter / 2)
 const clickableMeshes = []; // Array to store all meshes that should be clickable, allowing for enhanced camera controls relating to the clicked mesh.
+let selectedMesh = null; // Variable to store the mesh that has been clicked on by the user
+const selectedMeshPreviousPosition = new THREE.Vector3(); // Vector to store the previous position of the selected mesh before it is moved to the camera target position for focused viewing
+
+// Create the 3D canvas
+const container = document.getElementById("site-main"); // Variable to store the container element for the Three.js canvas (users monitor width x 90% users monitor height)
+const renderer = new THREE.WebGLRenderer({ antialias: true }); // Variable to store the Three.js WebGL renderer
+renderer.setSize(container.clientWidth, container.clientHeight); // Set the size of the renderer to match the size of the container element
+container.appendChild(renderer.domElement); // Append the renderer as a child of the container reference
+
+// Create the camera
+const camera = new THREE.PerspectiveCamera(
+    75,
+    container.clientWidth / container.clientHeight,
+    0.1,
+    10000,
+);
+
+// Create the camera controls
+const controls = initCameraControls(camera, renderer); // Initialize camera controls to allow the user to explore the solar system
 
 // Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
 const initSolarSystemView = () => {
-    const container = document.getElementById("site-main");
-
     // Create the scene
     const scene = new THREE.Scene();
 
-    // Create the camera
-    const camera = new THREE.PerspectiveCamera(
-        75,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        10000,
-    );
-
     // Create the renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
-
-    // Initialize camera controls to allow the user to explore the solar system
-    const controls = initCameraControls(camera, renderer);
 
     // Camera beginning position and orientation is set to be above the sun, looking down at it
     camera.position.set(0, 75, 0);
@@ -156,7 +159,7 @@ const initSolarSystemView = () => {
     });
 
     // Initialize raycast interaction for mouse clicks on the sun and planets, allowing for enhanced camera controls relating to the clicked mesh.
-    initRaycastInteraction(camera, renderer, clickableMeshes);
+    initRaycastInteraction(camera, renderer, clickableMeshes, handleMeshSelect);
 
     // Render orbit lines to show the paths of the planets and store them in variables
     const mercuryOrbit = createOrbitLine(scene, mercury.distanceFromSun); // Mercury's orbit
@@ -281,6 +284,32 @@ const createPlanet = (
         name: name,
         distanceFromSun: distanceFromSun,
     };
+};
+
+// Function to handle when a mesh is double clicked. Passed as a callback function to the initRaycastInteraction function
+const handleMeshSelect = (mesh) => {
+    // Set the value of selectedMesh to the mesh argument. Could either be a mesh object or null
+    selectedMesh = mesh;
+
+    // Check if a mesh was selected
+    if (mesh) {
+        // Get the X,Y,Z coordinates of the selected mesh and store them in the selectedMeshPreviousPosition
+        mesh.getWorldPosition(selectedMeshPreviousPosition);
+
+        // Snap the orbit controls target to the selected mesh
+        controls.target.copy(selectedMeshPreviousPosition);
+
+        // Get the radius of the mesh and calculate an offset for the camera position (so it doesn't get sent to the centre of the mesh)
+        const meshRadius = mesh.geometry.boundingSphere.radius;
+        const cameraOffset = meshRadius * 2;
+
+        // Move the camera to a position that is close to the selected mesh based off of its radius
+        camera.position.set(
+            selectedMeshPreviousPosition.x + cameraOffset,
+            selectedMeshPreviousPosition.y + cameraOffset,
+            selectedMeshPreviousPosition.z + cameraOffset,
+        );
+    }
 };
 
 // Call the function to initialize the solar system view
