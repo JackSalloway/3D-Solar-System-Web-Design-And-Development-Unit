@@ -49,7 +49,7 @@ const initSolarSystemView = () => {
         "Mercury",
         "../images/mercury_texture.jpg",
         1,
-        (57.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~57.9 million km
+        (57.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~57.9 million km (~38.7 units)
         (24 / 648) * baseRotationSpeed, // Rotation perioud of ~58 days
         (365.25 / 88) * baseOrbitalSpeed, // Orbital period of ~88 days
     );
@@ -60,7 +60,7 @@ const initSolarSystemView = () => {
         "Venus",
         "../images/venus_texture.jpg",
         1.5,
-        (108.2 / 149.6) * baseDistanceFromSun, // Distance from the sun ~108.2 million km
+        (108.2 / 149.6) * baseDistanceFromSun, // Distance from the sun ~108.2 million km (~72.3 units)
         (24 / 5832) * baseRotationSpeed * -1, // Retrograde rotation period of ~243 days
         (365.25 / 225) * baseOrbitalSpeed, // Orbital period of ~225 days
     );
@@ -71,7 +71,7 @@ const initSolarSystemView = () => {
         "Earth",
         "../images/earth_texture.jpg",
         2,
-        (149.6 / 149.6) * baseDistanceFromSun, // Distance from the sun ~149.6 million km
+        (149.6 / 149.6) * baseDistanceFromSun, // Distance from the sun ~149.6 million km (100 units)
         (24 / 24) * baseRotationSpeed, // Rotation period of ~24 hours
         (365.25 / 365.25) * baseOrbitalSpeed, // Orbital period of ~365.25 days
     );
@@ -82,7 +82,7 @@ const initSolarSystemView = () => {
         "Mars",
         "../images/mars_texture.jpg",
         1.2,
-        (227.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~227.9 million km
+        (227.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~227.9 million km (~152.3 units)
         (24 / 24.6) * baseRotationSpeed, // Rotation period of ~24.6 hours
         (365.25 / 687) * baseOrbitalSpeed, // Orbital period of ~687 days
     );
@@ -93,7 +93,7 @@ const initSolarSystemView = () => {
         "Jupiter",
         "../images/jupiter_texture.jpg",
         4,
-        (778.5 / 149.6) * baseDistanceFromSun, // Distance from the sun ~778.5 million km
+        (778.5 / 149.6) * baseDistanceFromSun, // Distance from the sun ~778.5 million km (~520.3 units)
         (24 / 9.9) * baseRotationSpeed, // Rotation period of ~9.9 hours
         (365.25 / 4333) * baseOrbitalSpeed, // Orbital period of ~4333 days (11.86 years)
     );
@@ -104,7 +104,7 @@ const initSolarSystemView = () => {
         "Saturn",
         "../images/saturn_texture.jpg",
         3.5,
-        (1432 / 149.6) * baseDistanceFromSun, // Distance from the sun ~1432 million km
+        (1432 / 149.6) * baseDistanceFromSun, // Distance from the sun ~1432 million km (~957.3 units)
         (24 / 10.7) * baseRotationSpeed, // Rotation period of ~10.7 hours
         (365.25 / 10759) * baseOrbitalSpeed, // Orbital period of ~10759 days (29.46 years)
     );
@@ -115,7 +115,7 @@ const initSolarSystemView = () => {
         "Uranus",
         "../images/uranus_texture.jpg",
         3,
-        (2871 / 149.6) * baseDistanceFromSun, // Distance from the sun ~2871 million km
+        (2871 / 149.6) * baseDistanceFromSun, // Distance from the sun ~2871 million km (~1919.6 units)
         (24 / 17) * baseRotationSpeed * -1, // Retrograde rotation period of ~17 hours
         (365.25 / 30688) * baseOrbitalSpeed, // Orbital period of ~30688 days (84.01 years)
     );
@@ -126,7 +126,7 @@ const initSolarSystemView = () => {
         "Neptune",
         "../images/neptune_texture.jpg",
         2.5,
-        (4495 / 149.6) * baseDistanceFromSun, // Distance from the sun ~4495 million km
+        (4495 / 149.6) * baseDistanceFromSun, // Distance from the sun ~4495 million km (~3005.3 units)
         (24 / 16) * baseRotationSpeed, // Rotation period of ~16 hours
         (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
     );
