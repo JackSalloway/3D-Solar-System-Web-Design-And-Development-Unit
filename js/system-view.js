@@ -1,5 +1,9 @@
 import * as THREE from "three";
 
+const planets = []; // Array of objects to store all planets and their corresponding orbit anchors for easy access in the animation loop
+const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
+const baseOrbitalSpeed = 0.002; // Base speed for Earth's orbit, used to calculate the speeds of the other planets based on their orbital periods
+
 // Function to initialize the solar system view - Currently just a basic implementation to test Three.js is working
 const initSolarSystemView = () => {
     const container = document.getElementById("site-main");
@@ -26,19 +30,88 @@ const initSolarSystemView = () => {
 
     // Render celestial bodies and store them in variables
     const sun = createSun(scene);
-    const mercury = createPlanet(scene, "../images/mercury_texture.jpg", 1, 20);
-    const venus = createPlanet(scene, "../images/venus_texture.jpg", 1.5, 30);
-    const earth = createPlanet(scene, "../images/earth_texture.jpg", 2, 40);
-    const mars = createPlanet(scene, "../images/mars_texture.jpg", 1.2, 50);
-    const jupiter = createPlanet(scene, "../images/jupiter_texture.jpg", 4, 70);
-    const saturn = createPlanet(scene, "../images/saturn_texture.jpg", 3.5, 90);
-    const uranus = createPlanet(scene, "../images/uranus_texture.jpg", 3, 110);
+
+    // Rotation speeds are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
+    // Orbit speeds are based on the actual orbital periods of the planets, with earth's orbit speed set to 0.002 as a 365 day orbital period
+    const mercury = createPlanet(
+        scene,
+        "../images/mercury_texture.jpg",
+        1,
+        20,
+        (24 / 648) * baseRotationSpeed, // Rotation perioud of ~58 days
+        (365.25 / 88) * baseOrbitalSpeed, // Orbital period of ~88 days
+    );
+    planets.push(mercury);
+
+    const venus = createPlanet(
+        scene,
+        "../images/venus_texture.jpg",
+        1.5,
+        30,
+        (24 / 5832) * baseRotationSpeed * -1, // Retrograde rotation period of ~243 days
+        (365.25 / 225) * baseOrbitalSpeed, // Orbital period of ~225 days
+    );
+    planets.push(venus);
+
+    const earth = createPlanet(
+        scene,
+        "../images/earth_texture.jpg",
+        2,
+        40,
+        (24 / 24) * baseRotationSpeed, // Rotation period of ~24 hours
+        (365.25 / 365.25) * baseOrbitalSpeed, // Orbital period of ~365.25 days
+    );
+    planets.push(earth);
+
+    const mars = createPlanet(
+        scene,
+        "../images/mars_texture.jpg",
+        1.2,
+        50,
+        (24 / 24.6) * baseRotationSpeed, // Rotation period of ~24.6 hours
+        (365.25 / 687) * baseOrbitalSpeed, // Orbital period of ~687 days
+    );
+    planets.push(mars);
+
+    const jupiter = createPlanet(
+        scene,
+        "../images/jupiter_texture.jpg",
+        4,
+        70,
+        (24 / 9.9) * baseRotationSpeed, // Rotation period of ~9.9 hours
+        (365.25 / 4333) * baseOrbitalSpeed, // Orbital period of ~4333 days (11.86 years)
+    );
+    planets.push(jupiter);
+
+    const saturn = createPlanet(
+        scene,
+        "../images/saturn_texture.jpg",
+        3.5,
+        90,
+        (24 / 10.7) * baseRotationSpeed, // Rotation period of ~10.7 hours
+        (365.25 / 10759) * baseOrbitalSpeed, // Orbital period of ~10759 days (29.46 years)
+    );
+    planets.push(saturn);
+
+    const uranus = createPlanet(
+        scene,
+        "../images/uranus_texture.jpg",
+        3,
+        110,
+        (24 / 17) * baseRotationSpeed * -1, // Retrograde rotation period of ~17 hours
+        (365.25 / 30688) * baseOrbitalSpeed, // Orbital period of ~30688 days (84.01 years)
+    );
+    planets.push(uranus);
+
     const neptune = createPlanet(
         scene,
         "../images/neptune_texture.jpg",
         2.5,
         130,
+        (24 / 16) * baseRotationSpeed, // Rotation period of ~16 hours
+        (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
     );
+    planets.push(neptune);
 
     // Render orbit lines to show the paths of the planets and store them in variables
     const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
@@ -53,18 +126,14 @@ const initSolarSystemView = () => {
     // Animation loop to render the scene
     const animate = () => {
         requestAnimationFrame(animate);
-
-        // Rotations are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
-        // Negative values are for planets with a retrograde rotation (Venus and Uranus)
+        // Rotate the sun on its axis
         sun.rotation.y += 0.00018; // ~27 day rotation period
-        mercury.rotation.y += 0.000085; // ~58 day rotation period
-        venus.rotation.y += -0.00002; // ~243 day retrograde rotation period
-        earth.rotation.y += 0.005; // ~24 hour rotation period
-        mars.rotation.y += 0.0048; // ~24 hour rotation period (slightly longer than Earth's)
-        jupiter.rotation.y += 0.0121; // ~9 hour rotation period
-        saturn.rotation.y += 0.0112; // ~10 hour rotation period
-        uranus.rotation.y += -0.007; // ~17 hour retrograde rotation period
-        neptune.rotation.y += 0.0075; // ~16 hour rotation period
+
+        // Loop through planets array to rotate each planet on its axis and rotate its orbit anchor to make it orbit the sun
+        planets.forEach((planet) => {
+            planet.mesh.rotation.y += planet.rotationSpeed;
+            planet.anchor.rotation.y += planet.orbitSpeed;
+        });
 
         renderer.render(scene, camera);
     };
@@ -125,7 +194,18 @@ const createOrbitLine = (scene, radius) => {
 };
 
 // Function to create and add a planet to the scene
-const createPlanet = (scene, texturePath, radius, distanceFromSun) => {
+const createPlanet = (
+    scene,
+    texturePath,
+    radius,
+    distanceFromSun,
+    rotationSpeed,
+    orbitSpeed,
+) => {
+    // Create an anchor at the centre of the scene (the sun, centre of the scene is the default value) to allow the planet to orbit it
+    const orbitAnchor = new THREE.Object3D();
+    scene.add(orbitAnchor);
+
     // Create the planet texture
     const textureLoader = new THREE.TextureLoader();
     const planetTexture = textureLoader.load(texturePath);
@@ -140,8 +220,16 @@ const createPlanet = (scene, texturePath, radius, distanceFromSun) => {
 
     planet.position.set(0, 0, distanceFromSun);
 
-    scene.add(planet);
-    return planet;
+    // Add the planet as a child of the orbit anchor, so that when the anchor is rotated in the animation loop, the planet will orbit around the sun
+    orbitAnchor.add(planet);
+
+    // Return a planet object to be stored in the planets array
+    return {
+        anchor: orbitAnchor,
+        mesh: planet,
+        rotationSpeed: rotationSpeed,
+        orbitSpeed: orbitSpeed,
+    };
 };
 
 // Call the function to initialize the solar system view
