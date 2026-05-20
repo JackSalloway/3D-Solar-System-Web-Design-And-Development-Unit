@@ -29,7 +29,7 @@ const initSolarSystemView = () => {
     const mercury = createMercury(scene);
 
     // Render orbit lines to show the paths of the planets and store them in variables
-    createOrbitLine(scene, 20); // Mercury's orbit
+    const mercuryOrbit = createOrbitLine(scene, 20); // Mercury's orbit
 
     // Animation loop to render the scene
     const animate = () => {
