@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+// Function to initialize raycast interaction for mouse clicks on the sun and planets
 // Export the function so it can be imported and used in system-view.js
 export const initRaycastInteraction = (camera, renderer, clickableMeshes) => {
     const raycaster = new THREE.Raycaster(); // Create a new raycaster object to handle raycasting for mouse interactions
