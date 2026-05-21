@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { initCameraControls } from "./camera-controls.js";
 import { initRaycastInteraction } from "./raycast-interaction.js";
+import { planetData } from "./data.js";
 
 const planets = []; // Array of objects to store all planets and their corresponding orbit anchors for easy access in the animation loop
 const baseRotationSpeed = 0.005; // Base speed for Earth's rotation, used to calculate the speeds of the other planets based on their rotation  periods
@@ -60,116 +61,42 @@ const initSolarSystemView = () => {
     sun.name = "Sun"; // Set the name of the sun mesh to "Sun" for easier identification in raycast interaction
     clickableMeshes.push(sun);
 
-    // Add the planets to the scene and store them in the planets array, which contains an object for each planets data values
-    // Distance from the sun is calculated based on the actual distance of each planet from the sun, with earth's distance set to 100 units
+    // Use the planetData object to add all the planets and their orbit lines to the scene
+    // Distance from the sun is calculated based on the actual distance of each planet from the sun, with earth's distance of 1AU set to 100 Three.js units
     // Rotation speeds are based on the actual rotation periods of the planets, with earth's rotation set to 0.005 as a 24 hour rotation period
     // Orbit speeds are based on the actual orbital periods of the planets, with earth's orbit speed set to 0.002 as a 365 day orbital period
-    const mercury = createPlanet(
-        scene,
-        "Mercury",
-        "../images/mercury_texture.jpg",
-        (2439.7 / 6371) * basePlanetRadius, // Diameter of ~4879 km (~0.77 units)
-        (57.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~57.9 million km (~38.7 units)
-        (24 / 648) * baseRotationSpeed, // Rotation perioud of ~58 days
-        (365.25 / 88) * baseOrbitalSpeed, // Orbital period of ~88 days
-    );
-    planets.push(mercury);
+    Object.values(planetData).forEach((planet) => {
+        // Create the mesh and store it in a variable
+        const currentPlanet = createPlanet(
+            scene,
+            planet.name,
+            planet.texture,
+            (planet.radius.value / planetData.earth.radius.value) *
+                basePlanetRadius,
+            (planet.distanceFromSun.value /
+                planetData.earth.distanceFromSun.value) *
+                baseDistanceFromSun,
+            (planetData.earth.rotationSpeed.value /
+                planet.rotationSpeed.value) *
+                baseRotationSpeed,
+            (planetData.earth.orbitalPeriod.value /
+                planet.orbitalPeriod.value) *
+                baseOrbitalSpeed,
+        );
 
-    const venus = createPlanet(
-        scene,
-        "Venus",
-        "../images/venus_texture.jpg",
-        (6051.8 / 6371) * basePlanetRadius, // Diameter of ~12104 km (~1.9 units)
-        (108.2 / 149.6) * baseDistanceFromSun, // Distance from the sun ~108.2 million km (~72.3 units)
-        (24 / 5832) * baseRotationSpeed * -1, // Retrograde rotation period of ~243 days
-        (365.25 / 225) * baseOrbitalSpeed, // Orbital period of ~225 days
-    );
-    planets.push(venus);
+        // Add the current planet to the planets array for animations
+        planets.push(currentPlanet);
 
-    const earth = createPlanet(
-        scene,
-        "Earth",
-        "../images/earth_texture.jpg",
-        basePlanetRadius, // Diameter of ~12756 km (~2 units)
-        (149.6 / 149.6) * baseDistanceFromSun, // Distance from the sun ~149.6 million km (100 units)
-        (24 / 24) * baseRotationSpeed, // Rotation period of ~24 hours
-        (365.25 / 365.25) * baseOrbitalSpeed, // Orbital period of ~365.25 days
-    );
-    planets.push(earth);
+        // Update the mesh name value and add the mesh to the clickableMeshes array for interactivity
+        currentPlanet.mesh.name = planet.name;
+        clickableMeshes.push(currentPlanet.mesh);
 
-    const mars = createPlanet(
-        scene,
-        "Mars",
-        "../images/mars_texture.jpg",
-        (3389.5 / 6371) * basePlanetRadius, // Diameter of ~3389.5 km (~1.06 units)
-        (227.9 / 149.6) * baseDistanceFromSun, // Distance from the sun ~227.9 million km (~152.3 units)
-        (24 / 24.6) * baseRotationSpeed, // Rotation period of ~24.6 hours
-        (365.25 / 687) * baseOrbitalSpeed, // Orbital period of ~687 days
-    );
-    planets.push(mars);
-
-    const jupiter = createPlanet(
-        scene,
-        "Jupiter",
-        "../images/jupiter_texture.jpg",
-        (69911 / 6371) * basePlanetRadius, // Diameter of ~69911 km (~21.95 units)
-        (778.5 / 149.6) * baseDistanceFromSun, // Distance from the sun ~778.5 million km (~520.3 units)
-        (24 / 9.9) * baseRotationSpeed, // Rotation period of ~9.9 hours
-        (365.25 / 4333) * baseOrbitalSpeed, // Orbital period of ~4333 days (11.86 years)
-    );
-    planets.push(jupiter);
-
-    const saturn = createPlanet(
-        scene,
-        "Saturn",
-        "../images/saturn_texture.jpg",
-        (58232 / 6371) * basePlanetRadius, // Diameter of ~58232 km (~18.28 units)
-        (1432 / 149.6) * baseDistanceFromSun, // Distance from the sun ~1432 million km (~957.3 units)
-        (24 / 10.7) * baseRotationSpeed, // Rotation period of ~10.7 hours
-        (365.25 / 10759) * baseOrbitalSpeed, // Orbital period of ~10759 days (29.46 years)
-    );
-    planets.push(saturn);
-
-    const uranus = createPlanet(
-        scene,
-        "Uranus",
-        "../images/uranus_texture.jpg",
-        (25362 / 6371) * basePlanetRadius, // Diameter of ~25362 km (~7.96 units)
-        (2871 / 149.6) * baseDistanceFromSun, // Distance from the sun ~2871 million km (~1919.6 units)
-        (24 / 17) * baseRotationSpeed * -1, // Retrograde rotation period of ~17 hours
-        (365.25 / 30688) * baseOrbitalSpeed, // Orbital period of ~30688 days (84.01 years)
-    );
-    planets.push(uranus);
-
-    const neptune = createPlanet(
-        scene,
-        "Neptune",
-        "../images/neptune_texture.jpg",
-        (24622 / 6371) * basePlanetRadius, // Diameter of ~24622 km (~7.73 units)
-        (4495 / 149.6) * baseDistanceFromSun, // Distance from the sun ~4495 million km (~3005.3 units)
-        (24 / 16) * baseRotationSpeed, // Rotation period of ~16 hours
-        (365.25 / 60182) * baseOrbitalSpeed, // Orbital period of ~60182 days (164.82 years)
-    );
-    planets.push(neptune);
-
-    // Push each of the planet meshes into the clickableMeshes array
-    planets.forEach((planet) => {
-        planet.mesh.name = planet.name; // Set the name of the mesh to the planet name for easier identification in raycast interaction
-        clickableMeshes.push(planet.mesh);
+        // add orbit line to the scene for the current planet
+        createOrbitLine(scene, currentPlanet.distanceFromSun);
     });
 
     // Initialize raycast interaction for mouse clicks on the sun and planets, allowing for enhanced camera controls relating to the clicked mesh.
     initRaycastInteraction(camera, renderer, clickableMeshes, handleMeshSelect);
-
-    // Render orbit lines to show the paths of the planets and store them in variables
-    const mercuryOrbit = createOrbitLine(scene, mercury.distanceFromSun); // Mercury's orbit
-    const venusOrbit = createOrbitLine(scene, venus.distanceFromSun); // Venus's orbit
-    const earthOrbit = createOrbitLine(scene, earth.distanceFromSun); // Earth's orbit
-    const marsOrbit = createOrbitLine(scene, mars.distanceFromSun); // Mars's orbit
-    const jupiterOrbit = createOrbitLine(scene, jupiter.distanceFromSun); // Jupiter's orbit
-    const saturnOrbit = createOrbitLine(scene, saturn.distanceFromSun); // Saturn's orbit
-    const uranusOrbit = createOrbitLine(scene, uranus.distanceFromSun); // Uranus's orbit
-    const neptuneOrbit = createOrbitLine(scene, neptune.distanceFromSun); // Neptune's orbit
 
     // Animation loop to render the scene
     const animate = () => {
