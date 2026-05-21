@@ -314,6 +314,23 @@ const createPlanet = (
     };
 };
 
+// Function to handle toggling the advanced controls sidebar on and off
+const sidebarToggle = () => {
+    // Get the required elements and store them in variables
+    const toggleButton = document.getElementById("sidebar-toggle");
+    const wrapper = document.getElementById("expandable-wrapper");
+
+    // Toggle the classes that cause the sidebar to expand
+    wrapper.classList.toggle("is-open");
+
+    // Update the text for the button based on the current state of the sidebar
+    if (wrapper.classList.contains("is-open")) {
+        toggleButton.textContent = "▲ Advanced Controls";
+    } else {
+        toggleButton.textContent = "▼ Advanced Controls";
+    }
+};
+
 // Function to handle when a mesh is double clicked. Passed as a callback function to the initRaycastInteraction function
 const handleMeshSelect = (mesh) => {
     // Set the value of selectedMesh to the mesh argument. Could either be a mesh object or null
@@ -339,6 +356,11 @@ const handleMeshSelect = (mesh) => {
         );
     }
 };
+
+// Add a click event listener to the advanced controls button that expands/collapses the sidebar
+document
+    .getElementById("sidebar-toggle")
+    .addEventListener("click", sidebarToggle);
 
 // Call the function to initialize the solar system view
 initSolarSystemView();

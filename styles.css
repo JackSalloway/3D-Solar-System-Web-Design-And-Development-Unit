@@ -85,22 +85,47 @@ h2 {
     align-items: center;
 }
 
-#sidebar-toggle {
+#controls-wrapper {
     position: absolute;
     top: 4rem;
-    left: 1rem;
-    z-index: 100;
-    padding: 10px 15px;
-    background: rgba(0, 15, 30, 0.8);
-    color: #00ffff;
+    right: 1rem;
+    padding: 1rem;
+    width: 25rem;
+    z-index: 99;
+}
+
+#sidebar-toggle {
+    width: 100%;
+    padding: 1rem 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #00d4ff;
     border: 1px solid #00ffff;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
-    font-family: "Orbitron", sans-serif;
-    transition: background-colour 0.3s;
+    transition: background-colour 0.2s ease;
+    backdrop-filter: blur(4px);
 }
 
 #sidebar-toggle:hover {
     background: rgba(0, 255, 255, 0.2);
+}
+
+#expandable-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-in-out;
+}
+
+#expandable-wrapper.is-open {
+    grid-template-rows: 1fr;
+}
+
+#expandable-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 /*** Planet page ***/
