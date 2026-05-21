@@ -87,8 +87,8 @@ h2 {
 
 #sidebar-toggle {
     position: absolute;
-    top: 60px;
-    left: 20px;
+    top: 4rem;
+    left: 1rem;
     z-index: 100;
     padding: 10px 15px;
     background: rgba(0, 15, 30, 0.8);
