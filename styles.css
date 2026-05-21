@@ -27,7 +27,8 @@ h3 {
 
 #canvas-placeholder,
 .planet-info-value,
-.planet-page-paragraph {
+.planet-page-paragraph,
+p {
     font-family: "space-mono", monospace;
     font-weight: 400;
 }
@@ -153,6 +154,10 @@ h3 {
     font-size: 0.85rem;
     color: #00d4ff;
     align-self: center;
+}
+
+.highlight-control {
+    font-weight: 700;
 }
 
 /*** Planet page ***/
