@@ -93,12 +93,12 @@ h3 {
     padding: 1rem;
     width: 25rem;
     z-index: 99;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 #sidebar-toggle {
     width: 100%;
     padding: 1rem 0;
-    background: rgba(0, 0, 0, 0.6);
     color: #00d4ff;
     border: 1px solid #00ffff;
     font-weight: bold;
@@ -106,6 +106,7 @@ h3 {
     cursor: pointer;
     transition: background-colour 0.2s ease;
     backdrop-filter: blur(4px);
+    background: none;
 }
 
 #sidebar-toggle:hover {
