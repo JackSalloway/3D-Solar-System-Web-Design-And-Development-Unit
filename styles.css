@@ -19,7 +19,8 @@ html {
 a,
 h1,
 h2,
-h3 {
+h3,
+h4 {
     font-family: "Orbitron", sans-serif;
     font-weight: 700;
     letter-spacing: 2px;
@@ -158,6 +159,16 @@ p {
 
 .highlight-control {
     font-weight: 700;
+}
+
+#selected-mesh-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#selected-mesh-section > img {
+    max-width: 100%;
 }
 
 /*** Planet page ***/

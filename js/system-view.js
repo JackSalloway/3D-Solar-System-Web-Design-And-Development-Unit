@@ -58,7 +58,11 @@ const initSolarSystemView = () => {
 
     // Render the sun and add it to the clickableMeshes array
     const sun = createSun(scene);
-    sun.name = "Sun"; // Set the name of the sun mesh to "Sun" for easier identification in raycast interaction
+
+    // Set the userData values of the sun mesh. As there is no data for the sun in data.js (only planets) I will add the relevant information here
+    sun.userData.name = "The Sun";
+    sun.userData.classification = "G-type main-sequence star";
+    sun.userData.image = "./images/sun.jpg";
     clickableMeshes.push(sun);
 
     // Use the planetData object to add all the planets and their orbit lines to the scene
@@ -230,6 +234,18 @@ const createPlanet = (
     // Add the planet as a child of the orbit anchor, so that when the anchor is rotated in the animation loop, the planet will orbit around the sun
     orbitAnchor.add(planet);
 
+    // Assign the data for the current planet to a variable
+    const currentPlanetData = planetData[name.toLowerCase()];
+
+    // Update the mesh.userData value for use later
+    planet.userData = {
+        name: currentPlanetData.name,
+        classification: currentPlanetData.classification,
+        image: currentPlanetData.image,
+    };
+
+    console.log(planet.userData);
+
     // Return a planet object to be stored in the planets array
     return {
         anchor: orbitAnchor,
@@ -258,6 +274,30 @@ const sidebarToggle = () => {
     }
 };
 
+// Function to populate the selected celestial body section in the sidebar when the user selects one
+const updateSidebarSelectedMesh = (mesh) => {
+    const div = document.getElementById("selected-mesh-section");
+
+    // The mesh parameter can be null if the user deselects a mesh
+    if (!mesh) {
+        div.innerHTML = `
+            <h3>Selected Celesital Body</h3>
+            <p>Double-Click a celestial body to select one!</p>
+        `;
+        return;
+    }
+
+    // There is a mesh selected, update the contents of the section
+    // If the selected mesh is the sun, the more information button will not render
+    div.innerHTML = `
+        <h3>Selected Celesital Body</h3>
+        <h4>${mesh.userData.name}</h4>
+        <p>Classification: ${mesh.userData.classification}</p>
+        <img src=${mesh.userData.image} alt='An image of the planet ${mesh.userData.name}.'/>
+        ${mesh.userData.name === "The Sun" ? "" : "<button>More information</button>"} 
+    `;
+};
+
 // Function to handle when a mesh is double clicked. Passed as a callback function to the initRaycastInteraction function
 const handleMeshSelect = (mesh) => {
     // Set the value of selectedMesh to the mesh argument. Could either be a mesh object or null
@@ -282,6 +322,9 @@ const handleMeshSelect = (mesh) => {
             selectedMeshPreviousPosition.z + cameraOffset,
         );
     }
+
+    // Update the sidebar to reflect the currently selected mesh
+    updateSidebarSelectedMesh(mesh);
 };
 
 // Add a click event listener to the advanced controls button that expands/collapses the sidebar
