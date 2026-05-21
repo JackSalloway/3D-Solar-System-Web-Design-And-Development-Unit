@@ -16,10 +16,11 @@ const initPlanetPage = () => {
 
     // Populate the page with the planet data
     document.querySelector("#planet-header").innerText = data.name;
-    document.querySelector("#orbital-period").innerText = data.orbitalPeriod;
-    document.querySelector("#diameter").innerText = data.diameter;
+    document.querySelector("#orbital-period").innerText =
+        data.orbitalPeriod.string;
+    document.querySelector("#diameter").innerText = data.radius.string;
     document.querySelector("#distance-from-sun").innerText =
-        data.distanceFromSun;
+        data.distanceFromSun.string;
     document.querySelector("#number-of-moons").innerText = data.numberOfMoons;
     document.querySelector("#surface-temperature").innerText =
         data.surfaceTemperature;
