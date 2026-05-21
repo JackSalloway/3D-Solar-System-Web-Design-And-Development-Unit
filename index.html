@@ -80,11 +80,17 @@
                 <button id="sidebar-toggle">▼ Advanced Controls</button>
 
                 <div id="expandable-wrapper">
+                    <!-- expandable-inner has overflow: hidden so not content is shown until the user clicks to expand the sidebar -->
                     <div id="expandable-inner">
-                        <!-- test buttons, just for testing the expaning sidebar -->
-                        <button>test 1</button>
-                        <button>test 2</button>
-                        <button>test 3</button>
+                        <div class="control-section" id="instructions-section">
+                            <h3>Instructions</h3>
+                        </div>
+                        <div class="control-section" id="jump-to-mesh-section">
+                            <h3>Jump to Celestial Body</h3>
+                        </div>
+                        <div class="control-section" id="selected-mesh-section">
+                            <h3>Selected Celesital Body</h3>
+                        </div>
                     </div>
                 </div>
             </div>
