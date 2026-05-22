@@ -286,6 +286,8 @@ p {
 #planet-media-wrapper {
     width: 100%;
     aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
 }
 
 #planet-3d-canvas {
