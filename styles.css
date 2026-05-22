@@ -95,6 +95,7 @@ p {
     padding: 1rem;
     width: 25rem;
     z-index: 99;
+    border: 1px solid #00ffff;
     background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -152,9 +153,13 @@ p {
 
 .control-section h3 {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #00d4ff;
     align-self: center;
+}
+
+.control-section > h4 {
+    font-size: 0.85rem;
 }
 
 .highlight-control {
