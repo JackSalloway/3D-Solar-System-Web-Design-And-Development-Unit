@@ -294,8 +294,17 @@ const updateSidebarSelectedMesh = (mesh) => {
         <h4>${mesh.userData.name}</h4>
         <p>Classification: ${mesh.userData.classification}</p>
         <img src=${mesh.userData.image} alt='An image of the planet ${mesh.userData.name}.'/>
-        ${mesh.userData.name === "The Sun" ? "" : "<button>More information</button>"} 
+        ${mesh.userData.name === "The Sun" ? "" : "<button id='more-info-button'>More information</button>"} 
     `;
+
+    // Make the button redirect the user to the planets information page when clicked
+    if (mesh.userData.name !== "The Sun") {
+        const infoButton = document.getElementById("more-info-button");
+
+        infoButton.addEventListener("click", () => {
+            window.location.href = `planet-page.html?planet=${mesh.userData.name.toLowerCase()}`;
+        });
+    }
 };
 
 // Function to handle when a mesh is double clicked. Passed as a callback function to the initRaycastInteraction function
