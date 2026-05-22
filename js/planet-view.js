@@ -16,16 +16,20 @@ const initPlanetPage = () => {
 
     // Populate the page with the planet data
     document.querySelector("#planet-header").innerText = data.name;
+    document.querySelector("#classification").innerText = data.classification;
     document.querySelector("#orbital-period").innerText =
         data.orbitalPeriod.string;
-    document.querySelector("#diameter").innerText = data.radius.string;
+    document.querySelector("#rotation-period").innerText =
+        data.rotationSpeed.string;
+    document.querySelector("#radius").innerText = data.radius.string;
     document.querySelector("#distance-from-sun").innerText =
         data.distanceFromSun.string;
+    document.querySelector("#surface-gravity").innerText = data.gravity;
+    document.querySelector("#mass").innerText = data.mass;
     document.querySelector("#number-of-moons").innerText = data.numberOfMoons;
     document.querySelector("#surface-temperature").innerText =
         data.surfaceTemperature;
-    document.querySelector("#interesting-fact").innerText =
-        data.interestingFact;
+    document.querySelector("#escape-velocity").innerText = data.escapeVelocity;
     document.querySelector("#description").innerText = data.description;
 
     // Set the planet image

@@ -235,7 +235,15 @@ p {
     gap: 2em;
 }
 
+#info-columns-wrapper {
+    height: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
 .planet-info-pair {
+    flex: 1 1 calc(50% - 0.75rem);
     display: flex;
     flex-direction: column;
     gap: 0.5em;
