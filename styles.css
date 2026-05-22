@@ -233,7 +233,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2em;
+    gap: 1rem;
     background: linear-gradient(
         135deg,
         rgba(0, 30, 45, 0.6) 0%,
@@ -268,7 +268,7 @@ p {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    padding: 2rem;
+    padding: 1rem 2rem;
 }
 
 .planet-info-pair {
