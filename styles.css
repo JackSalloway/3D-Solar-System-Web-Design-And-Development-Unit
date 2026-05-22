@@ -29,6 +29,7 @@ h4 {
 #canvas-placeholder,
 .planet-info-value,
 .planet-page-paragraph,
+.jump-to-mesh-button,
 p {
     font-family: "space-mono", monospace;
     font-weight: 400;
@@ -180,6 +181,27 @@ p {
 
 #selected-mesh-section > img {
     max-width: 80%;
+}
+
+#jump-to-buttons-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.jump-to-mesh-button {
+    /* flex: flex-grow flex-shrink flex-basis */
+    /* flex-grow = how much the element should grow if space is available */
+    /* flex-shrink = how much the element should shrink if there isnt enough space */
+    /* flex-basis = the inital size */
+    /* The values below will create 2 rows out of the 9 buttons. The first with 5 buttons, and the second with 4 */
+    flex: 1 1 calc(20% - 0.5rem);
+    background: rgba(0, 0, 0, 0.4);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    text-align: center;
+    cursor: pointer;
 }
 
 /*** Planet page ***/
