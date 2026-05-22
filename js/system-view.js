@@ -56,8 +56,17 @@ const initSolarSystemView = () => {
     // Set the scene background to the loaded skybox texture
     scene.background = skyboxTexture;
 
+    // Store a reference to the jump to section wrapper (used to assign click events to buttons when meshes are created)
+    const jumpToWrapper = document.getElementById("jump-to-buttons-wrapper");
+
     // Render the sun and add it to the clickableMeshes array
     const sun = createSun(scene);
+
+    // Update the jump to buttons functionality for the sun
+    setJumpToButtonFunctionality(
+        document.getElementById("jump-to-sun-button"),
+        sun,
+    );
 
     // Set the userData values of the sun mesh. As there is no data for the sun in data.js (only planets) I will add the relevant information here
     sun.userData.name = "The Sun";
@@ -97,6 +106,15 @@ const initSolarSystemView = () => {
 
         // add orbit line to the scene for the current planet
         createOrbitLine(scene, currentPlanet.distanceFromSun);
+
+        // Add functionality to the jump to buttons in the sidebar
+        // Update the jump to buttons functionality for the sun
+        setJumpToButtonFunctionality(
+            document.getElementById(
+                `jump-to-${planet.name.toLowerCase()}-button`,
+            ),
+            currentPlanet.mesh,
+        );
     });
 
     // Initialize raycast interaction for mouse clicks on the sun and planets, allowing for enhanced camera controls relating to the clicked mesh.
@@ -272,6 +290,13 @@ const sidebarToggle = () => {
     } else {
         toggleButton.textContent = "▼ Advanced Controls";
     }
+};
+
+// Function to tie each jump to button in the sidebar to the handleMeshSelect function for the relevant mesh
+const setJumpToButtonFunctionality = (button, mesh) => {
+    button.addEventListener("click", () => {
+        handleMeshSelect(mesh);
+    });
 };
 
 // Function to populate the selected celestial body section in the sidebar when the user selects one
