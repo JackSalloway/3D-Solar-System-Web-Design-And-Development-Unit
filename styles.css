@@ -99,7 +99,8 @@ p {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-#sidebar-toggle {
+#sidebar-toggle,
+#more-info-button {
     width: 100%;
     padding: 1rem 0;
     color: #00d4ff;
@@ -112,8 +113,13 @@ p {
     background: none;
 }
 
-#sidebar-toggle:hover {
+#sidebar-toggle:hover,
+#more-info-button:hover {
     background: rgba(0, 255, 255, 0.2);
+}
+
+#more-info-button {
+    padding: 0.25rem 0;
 }
 
 #expandable-wrapper {
