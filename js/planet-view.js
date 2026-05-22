@@ -113,7 +113,7 @@ const initSinglePlanetView = (container) => {
 
     // Create the planet mesh
     const textureLoader = new THREE.TextureLoader();
-    const geometry = new THREE.SphereGeometry(5.5, 128, 128);
+    const geometry = new THREE.SphereGeometry(8, 128, 128);
     const material = new THREE.MeshStandardMaterial({
         map: textureLoader.load(planetData[planetKey].texture),
     });
