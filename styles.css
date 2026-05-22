@@ -233,7 +233,6 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
     background: linear-gradient(
         135deg,
         rgba(0, 30, 45, 0.6) 0%,
