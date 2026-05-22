@@ -28,11 +28,6 @@ export const initRaycastInteraction = (
 
         // Check if a mesh was clicked
         if (intersects.length > 0) {
-            console.log(
-                `Mesh clicked: ${intersects[0].object.name}`,
-                intersects[0].object,
-            );
-
             // Get the first intersected mesh (the closest one to the camera)
             const clickedMesh = intersects[0].object;
 

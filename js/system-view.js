@@ -262,8 +262,6 @@ const createPlanet = (
         image: currentPlanetData.image,
     };
 
-    console.log(planet.userData);
-
     // Return a planet object to be stored in the planets array
     return {
         anchor: orbitAnchor,
