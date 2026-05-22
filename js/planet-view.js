@@ -1,8 +1,14 @@
+import * as THREE from "three";
+import { initCameraControls } from "./camera-controls.js";
 import { planetData } from "./data.js";
 
 // Get the planet name from the URL query parameters
 const params = new URLSearchParams(window.location.search);
 const planetKey = params.get("planet");
+
+let is3DViewActive = false; // Variable to toggle between the image and 3D model
+let sceneInitialised = false; // Variable to track if the 3D scene has been set up or not, once true will prevent the need to set up another 3D scene when toggling between the image and 3D model
+const toggleButton = document.getElementById("toggle-planet-media-button"); // Reference to the button that switches between the planet image and 3D model
 
 // Function to populate the planet information page after the user clicks on a planet
 const initPlanetPage = () => {
@@ -37,8 +43,95 @@ const initPlanetPage = () => {
     planetImage.src = data.image;
     planetImage.alt = "An image of the planet " + data.name;
 
+    // Add click event listener to the toggle media button
+    toggleButton.addEventListener("click", toggleMedia);
+
     // Set the page title to the planet name
     document.title = data.name + " - Solar System Explorer";
+};
+
+// Function to toggle the media between an image and a 3D model
+const toggleMedia = () => {
+    // Toggle the value of is3DViewActive
+    is3DViewActive = !is3DViewActive;
+
+    const planetImage = document.getElementById("planet-image");
+    const planetCanvasContainer = document.getElementById("planet-3d-canvas");
+
+    if (is3DViewActive) {
+        // Render the 3D model
+        // Update classes to only render the current selected view
+        planetImage.classList.add("hidden");
+        planetCanvasContainer.classList.remove("hidden");
+
+        // Update button text for next click
+        toggleButton.textContent = "Switch to image";
+
+        // Check if the scene is yet to be initialised
+        if (!sceneInitialised) {
+            initSinglePlanetView(planetCanvasContainer); // Initialise the scene
+            sceneInitialised = true; // Set sceneInitialised to true, prevents the need to create new 3D scenes when further toggling between the image and 3D model
+        }
+    } else {
+        // Render the image
+        // Update classes to only render the current selected view
+        planetImage.classList.remove("hidden");
+        planetCanvasContainer.classList.add("hidden");
+
+        // Update button text for next click
+        toggleButton.textContent = "Switch to 3D model";
+    }
+};
+
+// Function to set up a Three.js canvas with the current planet in it's centre
+const initSinglePlanetView = (container) => {
+    // Create the scene
+    const scene = new THREE.Scene();
+
+    // Create the camera
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        100,
+    );
+
+    // Create the renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Create and add lighting to the scene
+    // Faint, ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambientLight);
+
+    // Stronger, directional light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    directionalLight.position.set(5, 3, 5);
+    scene.add(directionalLight);
+
+    // Create the planet mesh
+    const textureLoader = new THREE.TextureLoader();
+    const geometry = new THREE.SphereGeometry(5.5, 128, 128);
+    const material = new THREE.MeshStandardMaterial({
+        map: textureLoader.load(planetData[planetKey].texture),
+    });
+    const planetMesh = new THREE.Mesh(geometry, material);
+    scene.add(planetMesh);
+
+    // Move the camera to a position where it can see the planet
+    camera.position.z = 10;
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+
+        planetMesh.rotation.y += 0.002;
+
+        renderer.render(scene, camera);
+    };
+
+    animate();
 };
 
 // Function to update the navbar links based on the current planet being viewed

@@ -283,9 +283,23 @@ p {
     text-align: center;
 }
 
+#planet-media-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+#planet-3d-canvas {
+    width: 100%;
+    height: 100%;
+}
+
 .planet-page-planet-image {
     width: 100%;
     height: auto;
+}
+
+.hidden {
+    display: none;
 }
 /************ Text styles ************/
 li a {

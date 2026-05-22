@@ -16,6 +16,14 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../styles.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="site-wrapper">
@@ -168,11 +176,18 @@
                     </p>
                 </div>
                 <div class="visual-section">
-                    <img
-                        src="../images/mercury.jpg"
-                        alt="An image of the planet Mercury"
-                        class="planet-page-planet-image"
-                    />
+                    <div id="planet-media-wrapper">
+                        <img
+                            id="planet-image"
+                            src="../images/mercury.jpg"
+                            alt="An image of the planet Mercury"
+                            class="planet-page-planet-image"
+                        />
+                        <div id="planet-3d-canvas" class="hidden"></div>
+                    </div>
+                    <button id="toggle-planet-media-button">
+                        Switch to 3D model
+                    </button>
                 </div>
             </div>
         </div>
