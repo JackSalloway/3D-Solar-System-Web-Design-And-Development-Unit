@@ -115,6 +115,7 @@ p {
 }
 
 #sidebar-toggle:hover,
+.jump-to-mesh-button:hover,
 #more-info-button:hover {
     background: rgba(0, 255, 255, 0.2);
 }
@@ -202,6 +203,7 @@ p {
     border: 1px solid rgba(0, 255, 255, 0.3);
     text-align: center;
     cursor: pointer;
+    transition: background-colour 0.2s ease;
 }
 
 /*** Planet page ***/
