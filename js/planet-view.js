@@ -123,10 +123,23 @@ const initSinglePlanetView = (container) => {
     // Move the camera to a position where it can see the planet
     camera.position.z = 10;
 
+    // Create the camera controls
+    const controls = initCameraControls(camera, renderer);
+
+    // Prevent the user from zooming or panning
+    controls.enableZoom = false;
+    controls.enablePan = false;
+
+    // Add a slight amount of damping so movement doesn't end so abruptly
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
     const animate = () => {
         requestAnimationFrame(animate);
 
         planetMesh.rotation.y += 0.002;
+
+        controls.update();
 
         renderer.render(scene, camera);
     };
