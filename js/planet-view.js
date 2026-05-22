@@ -35,7 +35,7 @@ const initPlanetPage = () => {
     // Set the planet image
     const planetImage = document.querySelector(".planet-page-planet-image");
     planetImage.src = data.image;
-    planetImage.alt = "High resolution image of " + data.name;
+    planetImage.alt = "An image of the planet " + data.name;
 
     // Set the page title to the planet name
     document.title = data.name + " - Solar System Explorer";
