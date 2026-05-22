@@ -233,6 +233,34 @@ p {
     flex-direction: column;
     justify-content: center;
     gap: 2em;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 30, 45, 0.6) 0%,
+        rgba(0, 10, 15, 0.4) 100%
+    );
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-top: 1px solid #00ffff;
+    border-bottom: 1px solid #00ffff;
+    border-radius: 6px;
+}
+
+/* Create another element behind the UI element to give it a transparent holographic background behind its current one */
+.info-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: inherit;
+    background-image: url("./images/rgb-holographic-background.png");
+    background-size: contain;
+    background-repeat: repeat;
+    background-position: center;
+
+    opacity: 0.1;
 }
 
 #info-columns-wrapper {
@@ -240,6 +268,7 @@ p {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    padding: 2rem;
 }
 
 .planet-info-pair {
@@ -247,6 +276,12 @@ p {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    align-items: center;
+}
+
+#description {
+    padding: 0.8rem;
+    text-align: center;
 }
 
 .planet-page-planet-image {
