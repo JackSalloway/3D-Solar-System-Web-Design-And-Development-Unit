@@ -20,6 +20,15 @@ const initPlanetPage = () => {
         return;
     }
 
+    // Remove the loading overlay after 300ms
+    setTimeout(() => {
+        const loader = document.getElementById("loading-overlay");
+        if (loader) {
+            loader.classList.add("fade-out");
+            loader.setAttribute("aria-hidden", "true");
+        }
+    }, 300);
+
     // Populate the page with the planet data
     document.querySelector("#planet-header").innerText = data.name;
     document.querySelector("#classification").innerText = data.classification;
