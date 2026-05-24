@@ -282,11 +282,13 @@ const sidebarToggle = () => {
     // Toggle the classes that cause the sidebar to expand
     wrapper.classList.toggle("is-open");
 
-    // Update the text for the button based on the current state of the sidebar
+    // Update the text for the button and ARIA values based on the current state of the sidebar
     if (wrapper.classList.contains("is-open")) {
         toggleButton.textContent = "▲ Advanced Controls";
+        toggleButton.setAttribute("aria-expanded", "true");
     } else {
         toggleButton.textContent = "▼ Advanced Controls";
+        toggleButton.setAttribute("aria-expanded", "false");
     }
 };
 
@@ -304,7 +306,7 @@ const updateSidebarSelectedMesh = (mesh) => {
     // The mesh parameter can be null if the user deselects a mesh
     if (!mesh) {
         div.innerHTML = `
-            <h3>Selected Celesital Body</h3>
+            <h3>Selected Celestial Body</h3>
             <p>Double-Click a celestial body to select one!</p>
         `;
         return;
@@ -313,7 +315,7 @@ const updateSidebarSelectedMesh = (mesh) => {
     // There is a mesh selected, update the contents of the section
     // If the selected mesh is the sun, the more information button will not render
     div.innerHTML = `
-        <h3>Selected Celesital Body</h3>
+        <h3>Selected Celestial Body</h3>
         <h4>${mesh.userData.name}</h4>
         <p>Classification: ${mesh.userData.classification}</p>
         <img src=${mesh.userData.image} alt='An image of the planet ${mesh.userData.name}.'/>
