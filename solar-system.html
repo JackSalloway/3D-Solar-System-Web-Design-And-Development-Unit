@@ -76,13 +76,25 @@
             </header>
             <main id="site-main"></main>
 
-            <div id="controls-wrapper">
-                <button id="sidebar-toggle">▼ Advanced Controls</button>
+            <aside
+                id="controls-wrapper"
+                aria-label="3 Dimensional canvas navigation controls"
+            >
+                <button
+                    id="sidebar-toggle"
+                    aria-expanded="false"
+                    aria-controls="expandable-wrapper"
+                >
+                    ▼ Advanced Controls
+                </button>
 
                 <div id="expandable-wrapper">
                     <!-- expandable-inner has overflow: hidden so not content is shown until the user clicks to expand the sidebar -->
                     <div id="expandable-inner">
-                        <div class="control-section" id="instructions-section">
+                        <section
+                            class="control-section"
+                            id="instructions-section"
+                        >
                             <h3>Instructions</h3>
 
                             <p>
@@ -115,8 +127,11 @@
                                 an empty space to break orbit and regain full
                                 camera controls
                             </p>
-                        </div>
-                        <div class="control-section" id="jump-to-mesh-section">
+                        </section>
+                        <section
+                            class="control-section"
+                            id="jump-to-mesh-section"
+                        >
                             <h3>Jump to Celestial Body</h3>
                             <p>
                                 Click a button below to jump to a celestial body
@@ -178,14 +193,18 @@
                                     Neptune
                                 </button>
                             </div>
-                        </div>
-                        <div class="control-section" id="selected-mesh-section">
+                        </section>
+                        <section
+                            class="control-section"
+                            id="selected-mesh-section"
+                            aria-live="polite"
+                        >
                             <h3>Selected Celestial Body</h3>
                             <p>Double-Click a celestial body to select one!</p>
-                        </div>
+                        </section>
                     </div>
                 </div>
-            </div>
+            </aside>
         </div>
 
         <script type="module" src="js/system-view.js"></script>
