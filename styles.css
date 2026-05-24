@@ -78,6 +78,7 @@ p {
 }
 
 #site-main {
+    position: relative;
     width: 100vw;
     height: 95vh;
 }

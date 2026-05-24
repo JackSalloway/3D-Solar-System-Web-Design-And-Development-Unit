@@ -120,6 +120,15 @@ const initSolarSystemView = () => {
     // Initialize raycast interaction for mouse clicks on the sun and planets, allowing for enhanced camera controls relating to the clicked mesh.
     initRaycastInteraction(camera, renderer, clickableMeshes, handleMeshSelect);
 
+    // Remove the loading overlay after 500ms
+    setTimeout(() => {
+        const loader = document.getElementById("loading-overlay");
+        if (loader) {
+            loader.classList.add("fade-out");
+            loader.setAttribute("aria-hidden", "true");
+        }
+    }, 500);
+
     // Animation loop to render the scene
     const animate = () => {
         requestAnimationFrame(animate);
