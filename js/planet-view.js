@@ -61,11 +61,12 @@ const toggleMedia = () => {
     if (is3DViewActive) {
         // Render the 3D model
         // Update classes to only render the current selected view
-        planetImage.classList.add("hidden");
-        planetCanvasContainer.classList.remove("hidden");
+        hideElement(planetImage, true);
+        hideElement(planetCanvasContainer, false);
 
-        // Update button text for next click
+        // Update button text and aria attribute values for next click
         toggleButton.textContent = "Switch to image";
+        toggleButton.setAttribute("aria-pressed", "true");
 
         // Check if the scene is yet to be initialised
         if (!sceneInitialised) {
@@ -75,11 +76,23 @@ const toggleMedia = () => {
     } else {
         // Render the image
         // Update classes to only render the current selected view
-        planetImage.classList.remove("hidden");
-        planetCanvasContainer.classList.add("hidden");
+        hideElement(planetImage, false);
+        hideElement(planetCanvasContainer, true);
 
-        // Update button text for next click
+        // Update button text and aria attribute values for next click
         toggleButton.textContent = "Switch to 3D model";
+        toggleButton.setAttribute("aria-pressed", "false");
+    }
+};
+
+// Function to update the class and ARIA states of media elements
+const hideElement = (element, shouldHide) => {
+    if (shouldHide) {
+        element.classList.add("hidden");
+        element.setAttribute("aria-hidden", "true");
+    } else {
+        element.classList.remove("hidden");
+        element.setAttribute("aria-hidden", "false");
     }
 };
 

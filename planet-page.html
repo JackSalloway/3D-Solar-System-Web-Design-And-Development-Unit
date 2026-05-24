@@ -98,8 +98,8 @@
                     </ul>
                 </nav>
             </header>
-            <div class="planet-page-wrapper">
-                <div class="info-section">
+            <main class="planet-page-wrapper">
+                <section class="info-section">
                     <h1 id="planet-header" class="planet-page-header">
                         Planet
                     </h1>
@@ -174,22 +174,32 @@
                     <p id="description" class="planet-page-paragraph">
                         loading...
                     </p>
-                </div>
-                <div class="visual-section">
-                    <div id="planet-media-wrapper">
+                </section>
+                <section class="visual-section">
+                    <figure id="planet-media-wrapper">
                         <img
                             id="planet-image"
                             src="../images/mercury.jpg"
                             alt="An image of the planet Mercury"
                             class="planet-page-planet-image"
+                            aria-hidden="false"
                         />
-                        <div id="planet-3d-canvas" class="hidden"></div>
-                    </div>
-                    <button id="toggle-planet-media-button">
+                        <div
+                            id="planet-3d-canvas"
+                            class="hidden"
+                            aria-label="Interactive 3D model of the planet"
+                            aria-hidden="true"
+                        ></div>
+                    </figure>
+                    <button
+                        id="toggle-planet-media-button"
+                        aria-pressed="false"
+                        aria-controls="planet-media-wrapper"
+                    >
                         Switch to 3D model
                     </button>
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
 
         <!-- Inject script -->
