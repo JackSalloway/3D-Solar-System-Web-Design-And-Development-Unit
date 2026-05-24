@@ -269,6 +269,7 @@ const createPlanet = (
         name: currentPlanetData.name,
         classification: currentPlanetData.classification,
         image: currentPlanetData.image,
+        transparentImage: currentPlanetData.transparentImage,
     };
 
     // Return a planet object to be stored in the planets array
@@ -321,13 +322,24 @@ const updateSidebarSelectedMesh = (mesh) => {
         return;
     }
 
+    // Add the transparent image for the Sun data
+    if (mesh.userData.name === "The Sun") {
+        mesh.userData.transparentImage = mesh.userData.image.replace(
+            ".jpg",
+            "_t.png",
+        );
+    }
+
     // There is a mesh selected, update the contents of the section
     // If the selected mesh is the sun, the more information button will not render
     div.innerHTML = `
         <h3>Selected Celestial Body</h3>
         <h4>${mesh.userData.name}</h4>
         <p>Classification: ${mesh.userData.classification}</p>
-        <img src=${mesh.userData.image} alt='An image of the planet ${mesh.userData.name}.'/>
+        <img
+            src='${mesh.userData.transparentImage}' 
+            alt='An image of the planet ${mesh.userData.name}.'
+        />
         ${mesh.userData.name === "The Sun" ? "" : "<button id='more-info-button'>More information</button>"} 
     `;
 
