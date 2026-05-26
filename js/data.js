@@ -20,7 +20,7 @@ export const planetData = {
         transparentImage: "../images/mercury_t.png",
         texture: "../images/mercury_texture.jpg",
         description:
-            "Mercury is the smallest planet in our solar system and the closest to the Sun. Due to its proximity to our star and its virtually non-existant atmosphere, it experiences violent temperature fluctuations. Its rocky surface is heavily cratered, resembling Earth's Moon, due to billions of years of asteroid impacts.",
+            "Mercury is the smallest planet in our solar system and the closest to the Sun. Due to its proximity to our star and its virtually non-existent atmosphere, it experiences violent temperature fluctuations. Its rocky surface is heavily cratered, resembling Earth's Moon, due to billions of years of asteroid impacts.",
         numberOfMoons: "0",
         surfaceTemperature: "-173 to 427 °C",
     },
