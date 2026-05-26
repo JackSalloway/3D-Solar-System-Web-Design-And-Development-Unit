@@ -181,7 +181,7 @@ const initSolarSystemView = () => {
 // Function to create and add the sun to the scene
 const createSun = (scene) => {
     const textureLoader = new THREE.TextureLoader();
-    const sunTexture = textureLoader.load("./images/sun_texture.jpg");
+    const sunTexture = textureLoader.load("../images/sun_texture.jpg");
 
     // Create the sun material with emissive properties to make it glow
     const sunMaterial = new THREE.MeshStandardMaterial({
